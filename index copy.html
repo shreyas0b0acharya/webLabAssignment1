@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shreyas B Acharya | Portfolio & Resume</title>
+
+    <!-- jQuery & Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ---------- ROOT VARIABLES ---------- */
+        :root {
+            --bg-primary: #f9fafb;
+            --bg-card: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --border: #d1d5db;
+            --accent: #4f46e5;
+            --accent-2: #9333ea;
+            --shadow: rgba(0,0,0,0.1);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #111827;
+            --bg-card: #1f2937;
+            --text-primary: #f3f4f6;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --border: #374151;
+            --accent: #6366f1;
+            --accent-2: #c084fc;
+            --shadow: rgba(0,0,0,0.3);
+        }
+
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+            line-height:1.6;
+            background:var(--bg-primary);
+            color:var(--text-primary);
+            transition:background .3s,color .3s;
+        }
+
+        /* ---------- NAV ---------- */
+        nav{
+            background:var(--bg-card);
+            box-shadow:0 2px 10px var(--shadow);
+            position:sticky;top:0;z-index:1000;
+        }
+        .nav-container{
+            max-width:1200px;margin:auto;padding:1rem 2rem;
+            display:flex;justify-content:space-between;align-items:center;
+        }
+        .logo{font-size:1.5rem;font-weight:bold;color:var(--accent);}
+        .nav-links{display:flex;gap:2rem;}
+        .nav-links a{
+            text-decoration:none;color:var(--text-secondary);
+            font-weight:500;transition:color .3s;cursor:pointer;
+        }
+        .nav-links a:hover,.nav-links a.active{color:var(--accent);}
+        .theme-toggle{
+            background:none;border:none;font-size:1.4rem;color:var(--text-muted);
+            cursor:pointer;transition:color .3s;
+        }
+        .theme-toggle:hover{color:var(--accent);}
+
+        /* ---------- PAGE ---------- */
+        .page{display:none;}
+        .page.active{display:block;}
+
+        /* ---------- HOME ---------- */
+        .home-page{
+            min-height:100vh;
+            background:linear-gradient(135deg,#eff6ff 0%,#e0e7ff 100%);
+            padding:4rem 2rem;
+        }
+        [data-theme="dark"] .home-page{
+            background:linear-gradient(135deg,#1e293b 0%,#334155 100%);
+        }
+        .hero{text-align:center;margin-bottom:3rem;}
+        .profile-image{
+            width:160px;height:160px;margin:0 auto 2rem;
+            background:linear-gradient(135deg,var(--accent),var(--accent-2));
+            border-radius:50%;display:flex;align-items:center;justify-content:center;
+        }
+        .profile-image i{font-size:5rem;color:#fff;}
+        .hero h1{font-size:3rem;color:var(--text-primary);margin-bottom:1rem;}
+        .hero h2{font-size:1.5rem;color:var(--text-muted);margin-bottom:1.5rem;}
+        .hero p{font-size:1.1rem;color:var(--text-muted);max-width:800px;margin:auto;}
+
+        .features{
+            display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+            gap:2rem;max-width:1200px;margin:4rem auto;
+        }
+        .feature-card{
+            background:var(--bg-card);padding:2rem;border-radius:10px;
+            box-shadow:0 4px 6px var(--shadow);transition:transform .3s,box-shadow .3s;
+        }
+        .feature-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px var(--shadow);}
+        .feature-card i{font-size:2.5rem;color:var(--accent);margin-bottom:1rem;}
+        .feature-card h3{font-size:1.3rem;margin-bottom:.5rem;}
+
+        .cta-buttons{text-align:center;margin-top:3rem;}
+        .btn{
+            display:inline-block;padding:.75rem 2rem;margin:0 .5rem;
+            border-radius:8px;text-decoration:none;font-weight:600;
+            transition:all .3s;cursor:pointer;border:none;font-size:1rem;
+        }
+        .btn-primary{background:var(--accent);color:#fff;}
+        .btn-primary:hover{background:#4338ca;}
+        .btn-secondary{background:var(--accent-2);color:#fff;}
+        .btn-secondary:hover{background:#7e22ce;}
+
+        /* ---------- CONTENT PAGES ---------- */
+        .content-page{min-height:100vh;background:var(--bg-primary);padding:3rem 2rem;}
+        .container{max-width:900px;margin:auto;}
+        .card{
+            background:var(--bg-card);border-radius:10px;
+            box-shadow:0 4px 6px var(--shadow);overflow:hidden;
+        }
+        .card-header{
+            background:linear-gradient(135deg,var(--accent),var(--accent-2));
+            color:#fff;padding:2rem;
+        }
+        .card-header.bio{text-align:center;}
+        .card-header h1{font-size:2.5rem;margin-bottom:.5rem;}
+        .card-header p{font-size:1.3rem;margin-bottom:1rem;}
+        .contact-info{display:flex;flex-wrap:wrap;gap:1.5rem;}
+        .contact-item{display:flex;align-items:center;gap:.5rem;}
+        .card-body{padding:2rem;}
+
+        .section{margin-bottom:2rem;}
+        .section-title{
+            font-size:1.8rem;color:var(--text-primary);
+            margin-bottom:1rem;padding-bottom:.5rem;
+            border-bottom:3px solid var(--accent);
+        }
+        .bio .section-title{border-bottom-color:var(--accent-2);}
+        .job{margin-bottom:1.5rem;}
+        .job-header{
+            display:flex;justify-content:space-between;align-items:start;
+            margin-bottom:.5rem;flex-wrap:wrap;
+        }
+        .job h3{font-size:1.2rem;color:var(--text-primary);}
+        .job .company{color:var(--accent);font-weight:600;}
+        .job .date{color:var(--text-muted);}
+        .job ul{margin-left:1.5rem;color:var(--text-secondary);}
+        .job ul li{margin-bottom:.3rem;}
+
+        .skills-grid{
+            display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+            gap:1.5rem;
+        }
+        .skill-category h3{font-size:1.1rem;margin-bottom:.5rem;color:var(--text-primary);}
+        .skill-tags{display:flex;flex-wrap:wrap;gap:.5rem;}
+        .tag{padding:.4rem .8rem;border-radius:20px;font-size:.9rem;}
+        .tag-blue{background:#dbeafe;color:#1e40af;}
+        .tag-purple{background:#f3e8ff;color:#7e22ce;}
+        .tag-green{background:#d1fae5;color:#065f46;}
+        .tag-pink{background:#fce7f3;color:#9f1239;}
+
+        .cert-list{list-style:none;}
+        .cert-list li{
+            margin-bottom:.5rem;color:var(--text-secondary);
+            display:flex;align-items:center;gap:.5rem;
+        }
+        .cert-list i{color:var(--accent);}
+
+        /* ---------- BIO-DATA ---------- */
+        .bio-grid{
+            display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+            gap:2rem;
+        }
+        .info-group{margin-bottom:1rem;}
+        .info-label{font-weight:600;color:var(--text-primary);margin-bottom:.3rem;}
+        .info-value{color:var(--text-muted);}
+        .bio-table{width:100%;border-collapse:collapse;margin-top:1rem;}
+        .bio-table th,.bio-table td{
+            padding:.75rem;text-align:left;border:1px solid var(--border);
+        }
+        .bio-table th{
+            background:#f3e8ff;font-weight:600;color:var(--text-primary);
+        }
+        .bio-table tr:nth-child(even){background:#f9fafb;}
+        [data-theme="dark"] .bio-table tr:nth-child(even){background:#374151;}
+
+        .hobbies{display:flex;flex-wrap:wrap;gap:.75rem;}
+        .hobby-tag{
+            background:#f3e8ff;color:#7e22ce;padding:.5rem 1rem;
+            border-radius:20px;
+        }
+        .declaration{margin-top:2rem;font-style:italic;color:var(--text-muted);}
+        .signature-section{
+            display:flex;justify-content:space-between;align-items:end;
+            margin-top:1.5rem;
+        }
+        .signature-section .signature{text-align:right;}
+        .signature-section .signature p:first-child{
+            font-weight:600;color:var(--text-primary);margin-bottom:.5rem;
+        }
+
+        @media (max-width:768px){
+            .hero h1{font-size:2rem;}
+            .hero h2{font-size:1.2rem;}
+            .nav-container{flex-direction:column;gap:1rem;}
+            .job-header{flex-direction:column;}
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Shreyas.dev</div>
+            <div class="nav-links">
+                <a href="#" data-page="home" class="nav-link active">Home</a>
+                <a href="#" data-page="resume" class="nav-link">Resume</a>
+                <a href="#" data-page="biodata" class="nav-link">Bio-Data</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active home-page">
+        <div class="hero">
+            <div class="profile-image"><i class="fas fa-user"></i></div>
+            <h1>Shreyas B Acharya</h1>
+            <h2>Full Stack Developer & AI Enthusiast</h2>
+            <p>Computer Science student (2027) passionate about solving large-scale, impactful problems using distributed systems, AI, and full-stack development.</p>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <i class="fas fa-code"></i>
+                <h3>Full Stack Developer</h3>
+                <p>React, Node.js, Firebase, MySQL, React Native</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-robot"></i>
+                <h3>AI & Cloud</h3>
+                <p>Google Cloud, Generative AI, LLMs, Vertex AI</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-trophy"></i>
+                <h3>Hackathons & Projects</h3>
+                <p>2 National Hackathons | MyCollege App | 50+ Users</p>
+            </div>
+        </div>
+
+        <div class="cta-buttons">
+            <button class="btn btn-primary" data-page="resume">View Resume</button>
+            <button class="btn btn-secondary" data-page="biodata">View Bio-Data</button>
+        </div>
+    </div>
+
+    <!-- Resume Page -->
+    <div id="resume" class="page content-page">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Shreyas B Acharya</h1>
+                    <p>Full Stack Developer | AI & Cloud Enthusiast</p>
+                    <div class="contact-info">
+                        <div class="contact-item"><i class="fas fa-phone"></i><span>+91 6363070230</span></div>
+                        <div class="contact-item"><i class="fas fa-envelope"></i>
+                            <a href="mailto:shreyasb19386@gmail.com" style="color:#fff;">shreyasb19386@gmail.com</a>
+                        </div>
+                        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Chitradurga, Karnataka, India</span></div>
+                        <div class="contact-item"><i class="fab fa-github"></i>
+                            <a href="https://github.com/shreyas0b0acharya" target="_blank" style="color:#fff;">github.com/shreyas0b0acharya</a>
+                        </div>
+                        <div class="contact-item"><i class="fab fa-linkedin"></i>
+                            <a href="https://linkedin.com/in/shreyas-b-acharya-a0ab74328" target="_blank" style="color:#fff;">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="section">
+                        <h2 class="section-title">Objective</h2>
+                        <p>Computer Science student (2027) passionate about solving large-scale, impactful problems using distributed systems, AI, and full-stack development.</p>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">Education</h2>
+                        <div class="job">
+                            <div class="job-header">
+                                <div><h3>B.E. in Computer Science</h3><p class="company">S J M Institute of Technology (VTU)</p></div>
+                                <span class="date">Aug 2023 – Jul 2027 (Expected)</span>
+                            </div>
+                            <p><strong>CGPA: 8.71 / 10</strong></p>
+                        </div>
+                        <div class="job">
+                            <div class="job-header">
+                                <div><h3>Intermediate (MPC / PUC)</h3><p class="company">KNPU College, Chitradurga</p></div>
+                                <span class="date">Jun 2021 – May 2023</span>
+                            </div>
+                            <p><strong>Percentage: 87.5%</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">Skills</h2>
+                        <div class="skills-grid">
+                            <div class="skill-category">
+                                <h3>Languages</h3>
+                                <div class="skill-tags">
+                                    <span class="tag tag-blue">Python</span><span class="tag tag-blue">C</span>
+                                    <span class="tag tag-blue">Java</span><span class="tag tag-blue">JavaScript</span>
+                                    <span class="tag tag-blue">TypeScript</span><span class="tag tag-blue">SQL</span>
+                                    <span class="tag tag-blue">NoSQL</span>
+                                </div>
+                            </div>
+                            <div class="skill-category">
+                                <h3>Frameworks</h3>
+                                <div class="skill-tags">
+                                    <span class="tag tag-purple">React</span><span class="tag tag-purple">React Native</span>
+                                    <span class="tag tag-purple">Node.js</span><span class="tag tag-purple">Express.js</span>
+                                    <span class="tag tag-purple">Tailwind CSS</span><span class="tag tag-purple">Bootstrap</span>
+                                    <span class="tag tag-purple">Material UI</span>
+                                </div>
+                            </div>
+                            <div class="skill-category">
+                                <h3>Databases & Tools</h3>
+                                <div class="skill-tags">
+                                    <span class="tag tag-green">Firebase</span><span class="tag tag-green">MySQL</span>
+                                    <span class="tag tag-green">MongoDB</span><span class="tag tag-green">Supabase</span>
+                                    <span class="tag tag-green">Git</span><span class="tag tag-green">Figma</span>
+                                    <span class="tag tag-green">Postman</span>
+                                </div>
+                            </div>
+                            <div class="skill-category">
+                                <h3>Core CS</h3>
+                                <div class="skill-tags">
+                                    <span class="tag tag-pink">DSA</span><span class="tag tag-pink">OOP</span>
+                                    <span class="tag tag-pink">DBMS</span><span class="tag tag-pink">OS</span>
+                                    <span class="tag tag-pink">ML</span><span class="tag tag-pink">Cloud</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">Projects</h2>
+                        <div class="job">
+                            <div class="job-header">
+                                <div><h3>MyCollege – College Utility Platform (V1 & V2)</h3><p class="company">Full-Stack Student App</p></div>
+                                <span class="date">2024 – Present</span>
+                            </div>
+                            <ul>
+                                <li>Built full-stack platform using React, Node.js, Express, MySQL with personalized timetables, notes, and class tracking</li>
+                                <li>Developing V2 in React Native with Firebase backend</li>
+                                <li><a href="https://github.com/shreyas0b0acharya/MyCollege_V1" target="_blank" style="color:var(--accent);">GitHub: MyCollege_V1</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">Experience</h2>
+                        <div class="job">
+                            <div class="job-header">
+                                <div><h3>Founder & Full-Stack Developer</h3><p class="company">Acharya Tech World (Planned Startup)</p></div>
+                                <span class="date">Sep 2024 – Present</span>
+                            </div>
+                            <ul>
+                                <li>Leading development of real-world apps: college utility & order management</li>
+                                <li>Tech Stack: React, React Native, Firebase, Supabase, MySQL, Google Drive API</li>
+                                <li>Designed architecture, UI/UX, JWT auth, real-time sync</li>
+                                <li>Delivered 5+ features based on 50+ active testers' feedback</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">Certifications</h2>
+                        <ul class="cert-list">
+                            <li><i class="fas fa-award"></i> Python & C – Great Learning (Jan 2024)</li>
+                            <li><i class="fas fa-award"></i> Generative AI, Vertex AI, LLMs, Responsible AI – Google Cloud (Mar 2025)</li>
+                            <li><i class="fas fa-award"></i> Agentic AI Day – Google Cloud & Hack2skill (2025)</li>
+                        </ul>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">Hackathons</h2>
+                        <ul class="cert-list">
+                            <li><i class="fas fa-trophy"></i> <strong>HACKYUGMA 24-Hour Hackathon</strong> – JNNCE, Shivamogga (Aug 21–22, 2025)</li>
+                            <li><i class="fas fa-trophy"></i> <strong>Silver Spectrum TechFest 48-Hour Hackathon</strong> – New Horizon College of Engineering (Oct 28–30, 2025)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bio-Data Page -->
+    <div id="biodata" class="page content-page">
+        <div class="container">
+            <div class="card">
+                <div class="card-header bio">
+                    <div class="profile-image" style="width:120px;height:120px;margin:0 auto 1rem;background:#fff;">
+                        <i class="fas fa-user" style="font-size:3.5rem;color:var(--accent);"></i>
+                    </div>
+                    <h1>BIO-DATA</h1>
+                    <p>Shreyas B Acharya</p>
+                </div>
+
+                <div class="card-body">
+                    <div class="bio-grid">
+                        <div>
+                            <div class="section">
+                                <h2 class="section-title bio">Personal Information</h2>
+                                <div class="info-group"><div class="info-label">Full Name:</div><div class="info-value">Shreyas B Acharya</div></div>
+                                <div class="info-group"><div class="info-label">Date of Birth:</div><div class="info-value">March 11, 2005</div></div>
+                                <div class="info-group"><div class="info-label">Age:</div><div class="info-value">20 Years</div></div>
+                                <div class="info-group"><div class="info-label">Gender:</div><div class="info-value">Male</div></div>
+                                <div class="info-group"><div class="info-label">Nationality:</div><div class="info-value">Indian</div></div>
+                                <div class="info-group"><div class="info-label">Marital Status:</div><div class="info-value">Single</div></div>
+                                <div class="info-group"><div class="info-label">Languages Known:</div><div class="info-value">English (Fluent), Kannada (Native), Hindi (Intermediate)</div></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="section">
+                                <h2 class="section-title bio">Contact Details</h2>
+                                <div class="info-group"><div class="info-label"><i class="fas fa-envelope"></i> Email:</div>
+                                    <div class="info-value"><a href="mailto:shreyasb19386@gmail.com">shreyasb19386@gmail.com</a></div></div>
+                                <div class="info-group"><div class="info-label"><i class="fas fa-phone"></i> Phone:</div><div class="info-value">+91 6363070230</div></div>
+                                <div class="info-group"><div class="info-label"><i class="fas fa-map-marker-alt"></i> Address:</div>
+                                    <div class="info-value">Chitradurga, Karnataka<br>India - 577501</div></div>
+                                <div class="info-group"><div class="info-label"><i class="fab fa-github"></i> GitHub:</div>
+                                    <div class="info-value"><a href="https://github.com/shreyas0b0acharya" target="_blank">github.com/shreyas0b0acharya</a></div></div>
+                                <div class="info-group"><div class="info-label"><i class="fab fa-linkedin"></i> LinkedIn:</div>
+                                    <div class="info-value"><a href="https://linkedin.com/in/shreyas-b-acharya-a0ab74328" target="_blank">linkedin.com/in/shreyas-b-acharya-a0ab74328</a></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title bio">Educational Qualifications</h2>
+                        <table class="bio-table">
+                            <thead><tr><th>Qualification</th><th>Institution</th><th>Year</th><th>Grade/Score</th></tr></thead>
+                            <tbody>
+                                <tr><td>B.E. Computer Science</td><td>SJM Institute of Technology (VTU)</td><td>2023–2027</td><td>8.71/10 CGPA</td></tr>
+                                <tr><td>PUC (MPC)</td><td>KNPU College</td><td>2021–2023</td><td>87.5%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title bio">Interests & Hobbies</h2>
+                        <div class="hobbies">
+                            <span class="hobby-tag">Calisthenics (4+ yrs)</span>
+                            <span class="hobby-tag">Coding YouTuber</span>
+                            <span class="hobby-tag">Tech Learning</span>
+                            <span class="hobby-tag">Open Source</span>
+                            <span class="hobby-tag">Fitness</span>
+                            <span class="hobby-tag">Hackathons</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title bio">Declaration</h2>
+                        <p class="declaration">
+                            I hereby declare that the above information is true and correct to the best of my knowledge and belief.
+                        </p>
+                        <div class="signature-section">
+                            <div><p>Date: November 13, 2025</p></div>
+                            <div class="signature"><p>Shreyas B Acharya</p><p style="color:var(--text-muted);font-size:.9rem;">(Signature)</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            const $body = $('body');
+            const $toggle = $('#themeToggle');
+            const $icon = $toggle.find('i');
+
+            // Load saved theme
+            const saved = localStorage.getItem('theme') || 'light';
+            $body.attr('data-theme', saved);
+            $icon.toggleClass('fa-moon', saved === 'light');
+            $icon.toggleClass('fa-sun', saved === 'dark');
+
+            // Toggle handler
+            $toggle.on('click', function () {
+                const current = $body.attr('data-theme');
+                const next = current === 'light' ? 'dark' : 'light';
+                $body.attr('data-theme', next);
+                localStorage.setItem('theme', next);
+                $icon.toggleClass('fa-moon', next === 'light');
+                $icon.toggleClass('fa-sun', next === 'dark');
+            });
+
+            // Page navigation
+            function showPage(name) {
+                $('.page').fadeOut(300, function () { $(this).removeClass('active'); });
+                setTimeout(() => { $('#' + name).fadeIn(300).addClass('active'); }, 300);
+                $('.nav-link').removeClass('active');
+                $(`.nav-link[data-page="${name}"]`).addClass('active');
+                $('html,body').animate({ scrollTop: 0 }, 300);
+            }
+            $('.nav-link, .btn[data-page]').on('click', function (e) {
+                e.preventDefault();
+                const p = $(this).data('page');
+                if (p) showPage(p);
+            });
+
+            // Card entrance animation
+            $('.feature-card').css({ opacity: 0, transform: 'translateY(20px)', transition: 'all .5s ease' });
+            setTimeout(() => $('.feature-card').css({ opacity: 1, transform: 'translateY(0)' }), 100);
+        });
+    </script>
+</body>
+</html>
